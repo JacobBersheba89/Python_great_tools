@@ -11,7 +11,7 @@ Pokud použijeme klávesovou zkratku ctrl+c, text se zkopíruje také do paměti
 Prostřednictvím zkratky ctrl+shift+q zobrazíme zkopírovaný text vedle kurzoru myši. 
 Text v rámečku zmizí po 5000 milisekundách.
 Samozřejmě program si můžete v .py souboru upravovat. 
-V konzoli VS code můžete následně vytvořit celý nový .exe program pomocí příkazu: pyinstaller --onefile text_tooltip_1.1.py
+V konzoli VS code můžete následně vytvořit celý nový .exe program pomocí příkazu: pyinstaller *** --onefile text_tooltip_1.1.py ***
 ten bude reagovat na vaše úpravy. 
 
 ### Features ###
