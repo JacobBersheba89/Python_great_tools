@@ -10,8 +10,7 @@ Je to jednoduché. Použitjete VS code a konzoli (View -> Terminal) a zadaáte t
 je potřeba být ve složce, ve které se nachází python soubor text_tooltip_1.1.py:
 cd C:\Users\jpawlas\Desktop\tooltip_project
 pip install pyinstaller
-pyinstaller --onefile text_tooltip_1.1.py
-#### Tento příkaz vytvoří kompletní program. #### 
+pyinstaller --onefile text_tooltip_1.1.py #### Tento příkaz vytvoří kompletní program. #### 
 
 Po spuštění program otevře okno, ve kterém uvidíte probíhající děje. 
 Pokud použijeme klávesovou zkratku ctrl+c, text se zkopíruje také do paměti programu.
@@ -27,8 +26,7 @@ It's simple. You use VS code and the console (View -> Terminal) and enter these 
 You need to be in the folder where the python file text_tooltip_1.1.py is located:
 cd C:\Users\jpawlas\Desktop\tooltip_project
 pip install pyinstaller
-pyinstaller --onefile text_tooltip_1.1.py
-#### This command will create a complete program. ####
+pyinstaller --onefile text_tooltip_1.1.py #### This command will create a complete program. ####
 
 After running the program, a window will open in which you can see the current events.
 If we use the keyboard shortcut ctrl+c, the text will also be copied to the program memory.
