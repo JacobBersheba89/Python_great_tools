@@ -1,7 +1,7 @@
 ## 1 ##
 📂 text_tooltip 📂
 
-Aplikace text_tooltip je jednoduchý a užitečný nástroj pro zobrazování zkopírovaného textu jako tooltipu přímo u kurzoru. Tento projekt vznikl jako součást složky !great_tools!, která obsahuje skvělé nástroje pro každodenní použití.
+Aplikace text_tooltip je jednoduchý a užitečný nástroj pro zobrazování zkopírovaného textu jako tooltipu přímo u kurzoru. Tento projekt vznikl jako součást složky !great_tools!, která obsahuje skvělé nástroje pro každodenní použití.<br>
 The text_tooltip app is a simple and handy tool that displays copied text as a tooltip right next to the cursor. This project is part of the !great_tools! collection, which features awesome tools for everyday use.
 
 ### Funkce ###
