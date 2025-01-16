@@ -4,7 +4,7 @@
 CZ Aplikace text_tooltip je jednoduchý a užitečný nástroj pro zobrazování zkopírovaného textu jako tooltipu přímo u kurzoru. Tento projekt jsem vytvořil pro potřeby kontroly různých dat, kdy kopírujeme text a potřebujeme jej porovnat.. <br><br>
 EN The text_tooltip app is a simple and handy tool that displays copied text as a tooltip right next to the cursor. This project was created for the needs of checking different data when we copy text and need to compare it..
 
-<span style="color: blue;"> ### Funkce ### </span>
+<mark> Funkce </mark><br>
 V první řadě musíte vytvořit .exe soubor. <br>
 Je to jednoduché. Použitjete VS code a konzoli (View -> Terminal) a zadaáte tyto příkazy:<br>
 je potřeba být ve složce, ve které se nachází python soubor text_tooltip_1.1.py:<br>
