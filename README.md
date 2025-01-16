@@ -37,9 +37,9 @@ In the VS code console, you can then create a whole new .exe program using the c
 which will respond to your edits.<br>
 
 ## libraries ##
-import pyperclip <br>
-import keyboard<br>
-import tkinter as tk<br>
-import threading<br>
-import pyautogui<br>
-import time <br>
+📗import pyperclip <br>
+📘import keyboard<br>
+📙import tkinter as tk<br>
+📔import threading<br>
+📖import pyautogui<br>
+📚import time <br>
