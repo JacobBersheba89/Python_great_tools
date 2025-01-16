@@ -8,7 +8,7 @@ EN The text_tooltip app is a simple and handy tool that displays copied text as 
 V první řadě musíte vytvořit .exe soubor. <br>
 Je to jednoduché. Použitjete VS code a konzoli (View -> Terminal) a zadaáte tyto příkazy:<br>
 je potřeba být ve složce, ve které se nachází python soubor text_tooltip_1.1.py:<br>
-cd C:\Users\jpawlas\Desktop\tooltip_project<br>
+cd C:\Users\Desktop\tooltip_project<br>
 pip install pyinstaller<br>
 pyinstaller --onefile text_tooltip_1.1.py #### Tento příkaz vytvoří kompletní program. #### <br>
 
@@ -24,7 +24,7 @@ ten bude reagovat na vaše úpravy. <br>
 First of all, you need to create an .exe file.<br>
 It's simple. You use VS code and the console (View -> Terminal) and enter these commands:<br>
 You need to be in the folder where the python file text_tooltip_1.1.py is located:<br>
-cd C:\Users\jpawlas\Desktop\tooltip_project<br>
+cd C:\Users\Desktop\tooltip_project<br>
 pip install pyinstaller<br>
 pyinstaller --onefile text_tooltip_1.1.py #### This command will create a complete program. ####<br>
 
