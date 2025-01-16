@@ -24,9 +24,9 @@ ten bude reagovat na vaše úpravy. <br>
 First of all, you need to create an .exe file.<br>
 It's simple. You use VS code and the console (View -> Terminal) and enter these commands:<br>
 You need to be in the folder where the python file text_tooltip_1.1.py is located:<br>
-command ➡️ cd C:\Users\Desktop\tooltip_project<br>
-command ➡️ pip install pyinstaller<br>
-command ➡️ pyinstaller --onefile text_tooltip_1.1.py #### This command will create a complete program. ####<br>
+➡️ cd C:\Users\Desktop\tooltip_project<br>
+➡️ pip install pyinstaller<br>
+➡️ pyinstaller --onefile text_tooltip_1.1.py #### This command will create a complete program. ####<br>
 
 After running the program, a window will open in which you can see the current events.<br>
 If we use the keyboard shortcut ctrl+c, the text will also be copied to the program memory.<br>
