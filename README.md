@@ -12,7 +12,7 @@ je potřeba být ve složce, ve které se nachází python soubor text_tooltip_1
 ➡️ pip install pyinstaller<br>
 ➡️ pyinstaller --onefile text_tooltip_1.1.py #### Tento příkaz vytvoří kompletní program. #### <br>
 
-Po spuštění program otevře okno, ve kterém uvidíte probíhající děje.<br> 
+Po spuštění programu se otevře okno, ve kterém uvidíte probíhající děje.<br> 
 Pokud použijeme klávesovou zkratku ctrl+c, text se zkopíruje také do paměti programu.<br>
 Prostřednictvím zkratky ctrl+shift+q zobrazíme zkopírovaný text vedle kurzoru myši. <br>
 Text v rámečku zmizí po 5000 milisekundách.<br>
