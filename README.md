@@ -20,7 +20,7 @@ Samozřejmě program si můžete v .py souboru upravovat. <br>
 V konzoli VS code můžete následně vytvořit celý nový .exe program pomocí příkazu: pyinstaller **--onefile text_tooltip_1.1.py**<br>
 ten bude reagovat na vaše úpravy. <br>
 
-<span style="color: blue;">Toto je modrý text.### Features ### </span>  
+<span style="color: blue;">Features</span>  
 First of all, you need to create an .exe file.<br>
 It's simple. You use VS code and the console (View -> Terminal) and enter these commands:<br>
 You need to be in the folder where the python file text_tooltip_1.1.py is located:<br>
