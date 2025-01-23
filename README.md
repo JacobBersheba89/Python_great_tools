@@ -1,3 +1,7 @@
+<h1>PYTHON_EXPERIMETALS</h1>
+--I'm trying to point everything towards python. All new experiences show how usable, variable, all-encompassing, fun and above all how fast python can be. I'm really surprised that a lot of complex kernels don't run on python.--
+
+
 ## 1 ##
 📂 text_tooltip 📂
 
