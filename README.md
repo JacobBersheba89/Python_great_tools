@@ -1,6 +1,8 @@
 <h1>PYTHON_EXPERIMETALS</h1>
 
-## I'm trying to point everything towards python 🐍. All new experiences show how usable, variable, all-encompassing, fun and above all how fast python can be. I'm really surprised that a lot of complex kernels don't run on python. The base are the libraries... biolion of options..  ##
+## I'm trying to point everything towards python 🐍. All new experiences show how usable, variable, all-encompassing, fun and above all how fast python can be. I'm really surprised that a lot of complex kernels don't run on python. The base are the libraries... biolion of options..  ## <br>
+
+##Všechno se snažím směřovat k pythonu. Veškeré nové zkušenosti ukazují, jak moc je python použitelný, variabilní, všepokrývající, zábavný a především jak může být rychlý. Moc se divím, že spoustu složitých jader neběží na pythonu. základ jsou rozhodně knihovny.. miliardy možností..  ##
 
 
 ## 1 ##
