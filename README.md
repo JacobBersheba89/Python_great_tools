@@ -53,4 +53,11 @@ which will respond to your edits.<br>
 📚import time <br>
 
 ## 2 ##
-📂 text_tooltip 📂
+📂 click 📂
+This small app counting yours mouse clicking.. in first versions it´s just about GUI app windows.. and you have to click buttom for count +1
+The goal is to make more usefull app, which will counting not just mouse clicking but also move of cursor. 
+Also want to next steps follow os my visiting websites, computer apps etc. 
+This instruments would like to use for monitoring of my computer works. 
+
+## libraries ##
+📙import tkinter as tk<br>
