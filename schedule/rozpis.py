@@ -1,7 +1,7 @@
 import itertools
 from openpyxl import Workbook
 from datetime import datetime, timedelta
-from collections import defaultdict
+import random
 
 # 🔹 Zadání vstupních dat
 pairs = [
@@ -14,61 +14,33 @@ pairs = [
 ]
 
 extra = "Jakub"   # extra osoba
-
-# Startovací pondělí
 start_date = datetime(2025, 9, 8)  # první pondělí
-
-# Dny týdne (Po–Pá)
 days = ["Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek"]
-long_days = ["Pondělí", "Středa"]  # dlouhé směny
+long_days = ["Pondělí", "Středa"]
+cz_weekdays = {"Mon":"Pondělí","Tue":"Úterý","Wed":"Středa","Thu":"Čtvrtek","Fri":"Pátek"}
 
-# Mapování anglických zkratek na české názvy
-cz_weekdays = {
-    "Mon": "Pondělí",
-    "Tue": "Úterý",
-    "Wed": "Středa",
-    "Thu": "Čtvrtek",
-    "Fri": "Pátek",
-    "Sat": "Sobota",
-    "Sun": "Neděle"
-}
-
-# 🔹 Seznam státních svátků v roce 2025 (den, měsíc) → název svátku
 holidays_2025 = {
-    (1, 1): "Nový rok",
-    (1, 5): "Svátek práce",
-    (8, 5): "Den vítězství",
-    (5, 7): "Den slovanských věrozvěstů Cyrila a Metoděje",
-    (6, 7): "Den upálení mistra Jana Husa",
-    (28, 9): "Den české státnosti",
-    (28, 10): "Den vzniku samostatného československého státu",
-    (17, 11): "Den boje za svobodu a demokracii",
-    (24, 12): "Štědrý den",
-    (25, 12): "1. svátek vánoční",
-    (26, 12): "2. svátek vánoční"
+    (1,1):"Nový rok",(1,5):"Svátek práce",(8,5):"Den vítězství",
+    (5,7):"Den slovanských věrozvěstů Cyrila a Metoděje",
+    (6,7):"Den upálení mistra Jana Husa",(28,9):"Den české státnosti",
+    (28,10):"Den vzniku samostatného československého státu",(17,11):"Den boje za svobodu a demokracii",
+    (24,12):"Štědrý den",(25,12):"1. svátek vánoční",(26,12):"2. svátek vánoční"
 }
 
-# 🔹 Funkce pro generování spravedlivého rozpisu
-def generate_fair_schedule(pairs, extra, start_date):
+def generate_schedule_random_jakub(pairs, extra, start_date):
     schedule = []
     pair_cycle = itertools.cycle(pairs)
-    extra_index = 0
-
-    # sledujeme počet dlouhých směn pro každého účastníka
-    long_shift_count = defaultdict(int)
-
     end_date = datetime(start_date.year, 12, 31)
-    current_date = start_date
     week = 0
 
-    while current_date <= end_date:
+    while True:
         monday = start_date + timedelta(weeks=week)
         for i, day_name in enumerate(days):
             date = monday + timedelta(days=i)
             if date > end_date:
-                break
+                return schedule
 
-            # pokud je státní svátek, zaznačit ho s názvem
+            # státní svátek
             if (date.day, date.month) in holidays_2025:
                 holiday_name = holidays_2025[(date.day, date.month)]
                 schedule.append((cz_weekdays[date.strftime('%a')], date.strftime('%d.%m.%Y'),
@@ -77,53 +49,46 @@ def generate_fair_schedule(pairs, extra, start_date):
 
             pair = next(pair_cycle)
 
-            # každý sudý týden otočíme role (telefon ↔ osobně)
+            # role otočeny každým sudým týdnem
             if (week + 1) % 2 == 0:
                 phone, desk = pair[1], pair[0]
             else:
                 phone, desk = pair[0], pair[1]
 
-            # Spravedlivé vměšování Jakuba – střídá role a páry rovnoměrně
-            if day_name in ["Úterý", "Čtvrtek"]:
-                if extra_index % 2 == 0:
-                    phone = extra
-                else:
-                    desk = extra
-                extra_index += 1
+            # Jakub se vmísí náhodně jen do každého druhého týdne
+            if (week + 1) % 2 == 0:
+                if random.choice([True, False]):  # náhodně vyber, zda se Jakub objeví tento den
+                    if random.choice([True, False]):
+                        phone = extra
+                    else:
+                        desk = extra
 
-            # Vyvážení dlouhých směn
+            # vyvážení dlouhých směn (pro přehlednost)
             if day_name in long_days:
-                # vybereme toho z dvojice s menším počtem dlouhých směn pro telefon
-                if long_shift_count[phone] > long_shift_count[desk]:
+                # prosté otočení, aby se střídaly role
+                if week % 2 == 0:
                     phone, desk = desk, phone
-                long_shift_count[phone] += 1
-                long_shift_count[desk] += 1
 
             schedule.append((cz_weekdays[date.strftime('%a')], date.strftime('%d.%m.%Y'), phone, desk))
 
         week += 1
-        current_date = start_date + timedelta(weeks=week)
-    return schedule
 
 # 🔹 Generování rozpisu do konce roku
-schedule = generate_fair_schedule(pairs, extra, start_date)
+schedule = generate_schedule_random_jakub(pairs, extra, start_date)
 
 # 🔹 Export do Excelu s prázdným řádkem mezi týdny
 wb = Workbook()
 ws = wb.active
 ws.title = "Rozpis služeb"
-
-# Hlavička
-ws.append(["Den", "Datum", "Telefon", "Osobně"])
+ws.append(["Den","Datum","Telefon","Osobně"])
 
 current_week = 0
 for row_index, row in enumerate(schedule):
     week_number = row_index // 5 + 1
     if current_week and week_number != current_week:
-        ws.append([])  # prázdný řádek mezi týdny
+        ws.append([])
     ws.append(row)
     current_week = week_number
 
-# Uložení souboru
-wb.save("rozpis_infolinka_fair.xlsx")
-print("✅ Rozpis vygenerován do souboru rozpis_infolinka_fair.xlsx")
+wb.save("rozpis_infolinka_random_jakub.xlsx")
+print("✅ Rozpis vygenerován do souboru rozpis_infolinka_random_jakub.xlsx")
