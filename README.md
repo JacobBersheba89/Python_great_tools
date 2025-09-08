@@ -67,3 +67,7 @@ This instruments would like to use for monitoring of my computer works.
 📖import threading
 📘import time
 
+
+## 3 ##
+📂 automate_your_schedule 📂
+python code.. generate schedule for staff
