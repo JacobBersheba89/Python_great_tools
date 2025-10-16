@@ -22,7 +22,7 @@ def create_new_folder():
     root.destroy()
 
 # Nastavení klávesové zkratky Ctrl+F5
-keyboard.add_hotkey('ctrl+f5', create_new_folder)
+keyboard.add_hotkey('ctrl+U', create_new_folder)
 
-print("Program běží. Stiskni Ctrl+F5 pro vytvoření nové složky. Pro ukončení stiskni Ctrl+C.")
+print("Program běží. Stiskni Ctrl+U pro vytvoření nové složky. Pro ukončení stiskni Ctrl+C.")
 keyboard.wait()
