@@ -2,6 +2,7 @@ import os
 import tkinter as tk
 from tkinter import simpledialog, messagebox
 import keyboard
+import pandas
 
 # Základní cesta, kam se budou vytvářet nové složky
 base_path = r"C:\Users\jpawlas\OneDrive - Státní fond životního prostředí ČR\Plocha\Výpisy"
@@ -26,3 +27,4 @@ keyboard.add_hotkey('ctrl+U', create_new_folder)
 
 print("Program běží. Stiskni Ctrl+U pro vytvoření nové složky. Pro ukončení stiskni Ctrl+C.")
 keyboard.wait()
+
