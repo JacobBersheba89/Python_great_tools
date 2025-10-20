@@ -69,5 +69,5 @@ This instruments would like to use for monitoring of my computer works.
 
 
 ## 3 ##
-📂 automate_your_schedule 📂
+📂 folder_in_a-directory 📂
 New directory automate create directory after descripe name of directory.. just press strl+F5 and do this. 
