@@ -63,9 +63,9 @@ This instruments would like to use for monitoring of my computer works.
 
 ## libraries ##
 📙import tkinter as tk<br>
-📔import mouse
-📖import threading
-📘import time
+📔import mouse <br>
+📖import threading <br>
+📘import time <br>
 
 
 ## 3 ##
