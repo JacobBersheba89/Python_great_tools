@@ -2,48 +2,56 @@ import os
 import tkinter as tk
 from tkinter import simpledialog, messagebox
 import keyboard
+import threading
+from pystray import Icon, Menu, MenuItem
+from PIL import Image, ImageDraw
+import time
 
-def create_directory():
-    # Inicializace GUI
-    root = tk.Tk()
-    root.withdraw()
-    root.attributes("-topmost", True)  # 🟢 Zaručí, že se okno objeví v popředí
+TARGET_PATH = r"C:\Users\jpawlas\Desktop\Nové složky"
 
-    # 1️⃣ Zadání cesty
-    target_path = simpledialog.askstring("Cíl", "Zadej cestu, kam chceš vytvořit adresář:", parent=root)
-    if not target_path:
-        messagebox.showinfo("Zrušeno", "Nebyla zadána žádná cesta.", parent=root)
+def create_folder():
+    # tkinter GUI musí běžet v hlavním vlákně
+    def ask_folder_name():
+        root = tk.Tk()
+        root.withdraw()
+        name = simpledialog.askstring("Nová složka", "Zadej název nové složky:")
+        if name:
+            folder_path = os.path.join(TARGET_PATH, name)
+            try:
+                os.makedirs(folder_path, exist_ok=False)
+                messagebox.showinfo("Hotovo", f"Složka '{name}' byla vytvořena.")
+            except FileExistsError:
+                messagebox.showwarning("Pozor", "Složka s tímto názvem už existuje.")
         root.destroy()
-        return
-    if not os.path.exists(target_path):
-        messagebox.showerror("Chyba", f"Cesta neexistuje:\n{target_path}", parent=root)
-        root.destroy()
-        return
 
-    # 2️⃣ Zadání názvu nové složky
-    folder_name = simpledialog.askstring("Název složky", "Zadej název nové složky:", parent=root)
-    if not folder_name:
-        messagebox.showinfo("Zrušeno", "Nebyl zadán název složky.", parent=root)
-        root.destroy()
-        return
+    # Spuštění tkinter dialogu v samostatném vlákně
+    threading.Thread(target=ask_folder_name).start()
 
-    new_folder_path = os.path.join(target_path, folder_name)
+def keyboard_listener():
+    keyboard.add_hotkey('ctrl+f5', create_folder)
+    # Čeká trvale na stisk, nikdy nekončí
+    while True:
+        time.sleep(1)
 
-    # 3️⃣ Vytvoření složky
-    try:
-        os.makedirs(new_folder_path)
-        messagebox.showinfo("Hotovo", f"Složka vytvořena:\n{new_folder_path}", parent=root)
-    except FileExistsError:
-        messagebox.showwarning("Pozor", "Složka už existuje.", parent=root)
-    except Exception as e:
-        messagebox.showerror("Chyba", f"Nepodařilo se vytvořit složku:\n{e}", parent=root)
+def create_image():
+    image = Image.new('RGB', (64, 64), color='blue')
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((16, 16, 48, 48), fill='white')
+    return image
 
-    root.destroy()
+def on_quit(icon, item):
+    icon.visible = False
+    icon.stop()
+    os._exit(0)
 
-# 🧩 Klávesová zkratka
-keyboard.add_hotkey("ctrl+f5", create_directory)
+def start_tray():
+    image = create_image()
+    menu = Menu(MenuItem('Ukončit', on_quit))
+    icon = Icon("Folder Creator", image, "Folder Creator běží", menu)
+    icon.run()
 
-print("Skript běží... (Ctrl+F5 pro vytvoření složky, ESC pro ukončení)")
-keyboard.wait("esc")
-
-
+if __name__ == "__main__":
+    # Spustí posluchač kláves ve vlákně
+    threading.Thread(target=keyboard_listener, daemon=True).start()
+    # Tray běží v hlavním vlákně a udržuje program aktivní
+    start_tray()
