@@ -1,57 +1,94 @@
 import os
+import json
 import tkinter as tk
-from tkinter import simpledialog, messagebox
+from tkinter import messagebox
 import keyboard
 import threading
-from pystray import Icon, Menu, MenuItem
-from PIL import Image, ImageDraw
 import time
 
-TARGET_PATH = r"C:\Users\jpawlas\Desktop\Nové složky"
+CONFIG_PATH = os.path.join(os.getenv("APPDATA"), "FolderCreatorConfig.json")
 
-def create_folder():
-    # tkinter GUI musí běžet v hlavním vlákně
-    def ask_folder_name():
-        root = tk.Tk()
-        root.withdraw()
-        name = simpledialog.askstring("Nová složka", "Zadej název nové složky:")
-        if name:
-            folder_path = os.path.join(TARGET_PATH, name)
+def load_config():
+    if os.path.exists(CONFIG_PATH):
+        try:
+            with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                return data.get("default_path", "")
+        except Exception:
+            return ""
+    return ""
+
+def save_config(path):
+    try:
+        with open(CONFIG_PATH, "w", encoding="utf-8") as f:
+            json.dump({"default_path": path}, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        messagebox.showerror("Chyba při ukládání", str(e))
+
+def create_directory():
+    def run_dialog():
+        modal = tk.Toplevel(root)
+        modal.title("Vytvoření nové složky")
+        modal.geometry("480x180")
+        modal.attributes("-topmost", True)
+
+        default_path = load_config()
+
+        tk.Label(modal, text="Cesta k adresáři:").pack(pady=(10, 0))
+        path_entry = tk.Entry(modal, width=60)
+        path_entry.insert(0, default_path)
+        path_entry.pack(pady=3)
+
+        tk.Label(modal, text="Název nové složky:").pack(pady=(10, 0))
+        name_entry = tk.Entry(modal, width=60)
+        name_entry.pack(pady=3)
+
+        def confirm():
+            path = path_entry.get().strip()
+            name = name_entry.get().strip()
+
+            if not path:
+                messagebox.showwarning("Chybí cesta", "Zadej prosím cestu k adresáři.", parent=modal)
+                return
+            if not os.path.exists(path):
+                messagebox.showerror("Chyba", f"Cesta neexistuje:\n{path}", parent=modal)
+                return
+            if not name:
+                messagebox.showwarning("Chybí název", "Zadej prosím název složky.", parent=modal)
+                return
+
+            save_config(path)
+            new_dir = os.path.join(path, name)
             try:
-                os.makedirs(folder_path, exist_ok=False)
-                messagebox.showinfo("Hotovo", f"Složka '{name}' byla vytvořena.")
+                os.makedirs(new_dir)
+                messagebox.showinfo("Hotovo", f"Složka vytvořena:\n{new_dir}", parent=modal)
             except FileExistsError:
-                messagebox.showwarning("Pozor", "Složka s tímto názvem už existuje.")
-        root.destroy()
+                messagebox.showwarning("Pozor", "Složka už existuje.", parent=modal)
+            except Exception as e:
+                messagebox.showerror("Chyba", f"Nepodařilo se vytvořit složku:\n{e}", parent=modal)
 
-    # Spuštění tkinter dialogu v samostatném vlákně
-    threading.Thread(target=ask_folder_name).start()
+            modal.destroy()
 
-def keyboard_listener():
-    keyboard.add_hotkey('ctrl+f5', create_folder)
-    # Čeká trvale na stisk, nikdy nekončí
+        tk.Button(modal, text="Vytvořit složku", command=confirm).pack(pady=10)
+        modal.grab_set()
+
+    # Spuštění dialogu ve vlastním vlákně
+    threading.Thread(target=run_dialog).start()
+
+# Hlavní skryté okno
+root = tk.Tk()
+root.withdraw()
+
+# Nastavení hotkey (Ctrl+F5)
+keyboard.add_hotkey("ctrl+f5", create_directory)
+
+print("Aplikace běží na pozadí... (Ctrl+F5 pro vytvoření složky)")
+
+# Nekonečná smyčka, aby aplikace běžela stále
+try:
     while True:
         time.sleep(1)
+except KeyboardInterrupt:
+    print("Aplikace ukončena.")
 
-def create_image():
-    image = Image.new('RGB', (64, 64), color='blue')
-    draw = ImageDraw.Draw(image)
-    draw.rectangle((16, 16, 48, 48), fill='white')
-    return image
 
-def on_quit(icon, item):
-    icon.visible = False
-    icon.stop()
-    os._exit(0)
-
-def start_tray():
-    image = create_image()
-    menu = Menu(MenuItem('Ukončit', on_quit))
-    icon = Icon("Folder Creator", image, "Folder Creator běží", menu)
-    icon.run()
-
-if __name__ == "__main__":
-    # Spustí posluchač kláves ve vlákně
-    threading.Thread(target=keyboard_listener, daemon=True).start()
-    # Tray běží v hlavním vlákně a udržuje program aktivní
-    start_tray()
